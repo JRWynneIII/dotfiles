@@ -107,3 +107,5 @@ ssh-sc() {
     ssh-add -s /usr/local/lib/opensc-pkcs11.so
 }
 alias vim=nvim
+export VISUAL=nvim
+export EDITOR="$VISUAL"
