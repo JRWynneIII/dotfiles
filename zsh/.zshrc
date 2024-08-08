@@ -8,13 +8,16 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+autoload is-at-least
+if ! is-at-least 5.2.0 $ZSH_VERSION; then
+	ZSH_THEME="af-magic"
+fi
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -52,7 +55,7 @@ ZSH_THEME="robbyrussell"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -71,6 +74,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
+plugins=($plugins spaceship-vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,12 +104,29 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-eval $(keychain --eval --quick --agents ssh)
-ssh-sc() {
-    echo "removing keys provided by PKCS#11 shared library"
-    ssh-add -e /usr/local/lib/opensc-pkcs11.so 2>/dev/null
-    ssh-add -s /usr/local/lib/opensc-pkcs11.so
-}
 alias vim=nvim
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+if is-at-least 5.2.0 $ZSH_VERSION; then
+	source ~/.zsh/spaceship/spaceship.zsh
+fi
+
+validate_erb() {
+  /opt/puppetlabs/puppet/bin/erb -P -x -T '-' "$1" | /opt/puppetlabs/puppet/bin/ruby -c
+}
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+        . "/usr/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
