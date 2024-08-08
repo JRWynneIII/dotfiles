@@ -15,6 +15,7 @@ call plug#begin()
 "Plugin 'vim-airline/vim-airline-themes'
 Plug 'VundleVim/Vundle.vim'
 Plug 'mhartington/oceanic-next'
+"Plug 'ellisonleao/gruvbox.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'rodjek/vim-puppet'
 Plug 'godlygeek/tabular'
@@ -29,6 +30,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 "Plug 'ryanoasis/vim-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 call plug#end()
 
@@ -45,7 +47,7 @@ require'nvim-web-devicons'.setup {
 	default = true;
 };
 
-local custom_nord = require'lualine.themes.nord'
+--local custom_nord = require'lualine.themes.nord'
 
 -- Change the background of lualine_c section for normal mode
 require('lualine').setup{
@@ -129,9 +131,12 @@ if (has("termguicolors"))
 endif
 
  " Theme
-colorscheme OceanicNext
+"set background=dark
+"colorscheme gruvbox
+colorscheme catppuccin-mocha "catppuccin catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+
 syntax enable
-hi Normal guibg=NONE ctermbg=NONE
-hi LineNr guibg=NONE ctermbg=NONE
-hi SignColumn guibg=NONE ctermbg=NONE
-hi EndOfBuffer guibg=NONE ctermbg=NONE
+"#hi Normal guibg=NONE ctermbg=NONE
+"#hi LineNr guibg=NONE ctermbg=NONE
+"#hi SignColumn guibg=NONE ctermbg=NONE
+"#hi EndOfBuffer guibg=NONE ctermbg=NONE
